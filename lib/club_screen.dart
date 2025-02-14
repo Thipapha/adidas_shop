@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ShoppingScreen extends StatelessWidget {
+class ClubScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shopping Screen'),
+        title: Text('Club Screen'),
       ),
       body: Center(
         child: Text(
-          'This is Shopping Screen',
+          'This is Club Screen',
           style: TextStyle(fontSize: 24),
         ),
       ),
