@@ -8,10 +8,7 @@ class ShoppingScreen extends StatelessWidget {
         title: Text('Shopping Screen'),
       ),
       body: Center(
-        child: Text(
-          'This is Shopping Screen',
-          style: TextStyle(fontSize: 24),
-        ),
+        child: Text('Welcome to the Shopping Screen!'),
       ),
     );
   }

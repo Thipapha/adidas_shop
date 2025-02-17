@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 
-class FavScreen extends StatelessWidget {
+class FavouriteScreen extends StatelessWidget {
+  const FavouriteScreen({super.key});
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Fav Screen'),
-      ),
-      body: Center(
-        child: Text(
-          'This is Fav Screen',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+    return const Center(
+      child: Text("Favors Screen"),
     );
   }
 }

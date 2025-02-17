@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:your_project_name/screens/adidas_screen.dart';
-import 'package:your_project_name/screens/club_screen.dart';
-import 'package:your_project_name/screens/fav_screen.dart';
-import 'package:your_project_name/screens/search_screen.dart';
-import 'package:your_project_name/screens/shopping_screen.dart';
+import 'package:flutter_application_1/bottom_nav_bar.dart';
+
+import 'adidas_screen.dart';
+import 'club_screen.dart';
+import 'fav_screen.dart';
+import 'search_screen.dart';
+import 'shopping_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,82 +15,103 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  final Map<int, Map<String, Widget>> _navigationMap = {
+    0: {"title": const Text("SHOP", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)), "screen": AdidasScreen()},
+    1: {"title": const Text("SEARCH", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)), "screen": SearchScreen()},
+    2: {"title": const Text("FAVORITES", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)), "screen": FavouriteScreen()},
+    3: {"title": const Text("SHOP", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)), "screen": ShoppingScreen()},
+    4: {"title": const Text("ADICLUB", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)), "screen": ClubScreen()},
+  };
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "SHOP",
-              style: TextStyle(letterSpacing: 1),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(_selectedIndex == 0 ? 120.0 : 60.0),
+        child: AppBar(
+          title: _navigationMap[_selectedIndex]!['title'],
+          actions: [
+            IconButton(
+              icon: Icon(Icons.person_outline, color: Colors.black),
+            onPressed:  () {},
             ),
-            backgroundColor: Colors.white,
-            actions: [
-              Icon(Icons.person_2_outlined),
-              SizedBox(
-                width: 10,
-              ),
-              Icon(Icons.search),
-              SizedBox(
-                width: 10,
-              )
-            ],
-          ),
-          //
-          body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          ],
+          backgroundColor: Colors.white,
+          elevation: 0,
+          flexibleSpace: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AdidasScreen()),
-                  );
-                },
-                child: Text('Adidas Screen'),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Colors.grey[300],
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ClubScreen()),
-                  );
-                },
-                child: Text('Club Screen'),
+
+              if (_selectedIndex == 0)
+              Padding(padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:BorderRadius.circular(8), //ความโค้งของมุม
+                  border: Border.all(color: Colors.grey[400]!, width: 1),
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Search",
+                    prefixIcon: Icon(Icons.search, color:Colors.grey),
+                    border: InputBorder.none, //ลบส้นขอบเริ่มต้นของ textfield
+                    contentPadding: EdgeInsets.symmetric(vertical: 10),
+                  ),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FavScreen()),
-                  );
-                },
-                child: Text('Fav Screen'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SearchScreen()),
-                  );
-                },
-                child: Text('Search Screen'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ShoppingScreen()),
-                  );
-                },
-                child: Text('Shopping Screen'),
-              ),
-            ],
-          ),
-          //
+            ),
+          ],
         ),
+      ),
+    ),
+    body: _navigationMap[_selectedIndex]!['screen'],
+    bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Center(
+              child: Image.asset(
+                'assets/icons/logo.png',
+                width: 24,
+                height: 28,
+              ),
+
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(icon: Center(child: Icon(Icons.search)), label: ''),
+          BottomNavigationBarItem(icon: Center(child: Icon(Icons.favorite_border)), label: ''),
+          BottomNavigationBarItem(icon: Center(child: Icon(Icons.shopping_bag_outlined)), label: ''),
+          BottomNavigationBarItem(
+            icon: Center(
+              child: Image.asset(
+                'assets/icons/adiclub.png',
+                width: 32,
+                height: 32,
+              ),
+              
+            ),
+            label: '',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.teal,
+        onTap: _onItemTapped,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
       ),
     );
   }
